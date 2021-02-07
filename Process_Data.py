@@ -70,7 +70,6 @@ class Stock:
             row.append(process_text(i.text))
         for i in row:
             i = str2num(i)
-        row = list(day_info.iloc[i].values)
         date = row[1]
         reference,close,volume,open,highest,lowest = row[2],row[5],row[6],row[7],row[8],row[9]
         price = Price(reference,open,close,highest,lowest)
@@ -79,17 +78,24 @@ class Stock:
         self.day_data.append(day_data)
     def add(self,day_data):
         self.day_data.append(day_data)
+    def SMA(self,x = int):
+        sum = 0
+
+
+def init_MBB():
+    length = len(day_info.index)
+    for i in range(1, length):
+        row = list(day_info.iloc[i].values)
+        date = row[1]
+        reference, close, volume, open, highest, lowest = row[2], row[5], row[6], row[7], row[8], row[9]
+        price = Price(reference, open, close, highest, lowest)
+        vol = Volume(volume, price)
+        day_data = Day_Data(date, vol)
+        MBB.add(day_data)
+    MBB.day_data.reverse()
 
 MBB = Stock("MBB")
-length = len(day_info.index)
-for i in range(1,length):
-    row = list(day_info.iloc[i].values)
-    date = row[1]
-    reference,close,volume,open,highest,lowest = row[2],row[5],row[6],row[7],row[8],row[9]
-    price = Price(reference,open,close,highest,lowest)
-    vol = Volume(volume,price)
-    day_data = Day_Data(date,vol)
-    MBB.add(day_data)
+init_MBB()
 
 
 
