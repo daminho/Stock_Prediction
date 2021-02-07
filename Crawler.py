@@ -2,7 +2,9 @@ import csv
 import requests
 import pandas
 from bs4 import BeautifulSoup
+import warnings
 
+warnings.filterwarnings('ignore')
 
 def str2num(x):
     res,cnt = 0,0
@@ -39,7 +41,6 @@ def get_data():
         snd = "&id=mbb"
         for i in range(1,48):
             link = fst + str(i) + snd
-            print(link)
             r = requests.get(link, verify = False)
             soup = BeautifulSoup(r.content,'html.parser')
             table = list(soup.find('div',{'id' : 'content'}).find('table'))
